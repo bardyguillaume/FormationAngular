@@ -27,8 +27,16 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                  "src/stylings/"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -127,6 +135,41 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "gabarits": {
+      "root": "projects/gabarits",
+      "sourceRoot": "projects/gabarits/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/gabarits/tsconfig.lib.json",
+            "project": "projects/gabarits/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/gabarits/src/test.ts",
+            "tsConfig": "projects/gabarits/tsconfig.spec.json",
+            "karmaConfig": "projects/gabarits/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/gabarits/tsconfig.lib.json",
+              "projects/gabarits/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]
