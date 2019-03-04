@@ -1,7 +1,7 @@
 ## FormationAngular
 Fomation Angular Capgemini du 04/03
 
-#Liens utiles utilisés 
+# Liens utiles utilisés 
 
 * https://angular.io/
 * https://fontawesome.com/
