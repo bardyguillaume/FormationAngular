@@ -6,16 +6,18 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  constructor() {}
+  constructor(
+    public afAuth: AngularFireAuth
+  ) {}
 
   doFacebookLogin() {
     return new Promise<any>((resolve, reject) => {
       const provider = new firebase.auth.FacebookAuthProvider();
-      firebase
-        .auth()
+      this.afAuth.auth
         .signInWithPopup(provider)
         .then(
           res => {
+            console.log(res.user.photoURL);
             resolve(res);
           },
           err => {
@@ -26,22 +28,33 @@ export class AuthServiceService {
     });
   }
 
-  loginWithGoogle() {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(function() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        // In memory persistence will be applied to the signed in Google user
-        // even though the persistence was set to 'none' and a page redirect
-        // occurred.
-        return firebase.auth().signInWithPopup(provider);
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        console.log(error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
+  doTwitterLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.TwitterAuthProvider();
+      this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(res => {
+        resolve(res);
+      }, err => {
+        console.log(err);
+        reject(err);
       });
+    });
+  }
+
+  doGoogleLogin() {
+    return new Promise<any>((resolve, reject) => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(res => {
+        resolve(res);
+      }, err => {
+        console.log(err);
+        reject(err);
+      });
+    });
   }
 }

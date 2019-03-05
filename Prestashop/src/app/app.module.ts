@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UiModule } from './ui/ui.module';
-
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
+import { LoginModule } from './login/login.module';
+import { UiModule } from './ui/ui.module';
+import { AppRoutingModule } from './app-routing.module';
+
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { environment } from '../environments/environment';
     BrowserModule,
     NgbModule,
     UiModule,
+    LoginModule,
+    AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
