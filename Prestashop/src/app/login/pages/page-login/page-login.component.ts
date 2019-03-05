@@ -37,15 +37,16 @@ export class PageLoginComponent implements OnInit {
 
   tryTwitterLogin() {
     this.authService.doTwitterLogin()
-    .then(res => {
+    .then((res: firebase.auth.UserCredential) => {
       console.log('twitter login');
+
       this.afficherInfosUtilisateurs(res);
     });
   }
 
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
-    .then(res => {
+    .then((res: firebase.auth.UserCredential) => {
       console.log('google login');
       this.afficherInfosUtilisateurs(res);
     });
