@@ -1,9 +1,10 @@
 
 Todo:
-  ☐ Faire l'authent fb avec template !
-  ☐ Grille 12 col
-  ☐ RWD vs Mobile First
-  ☐ Poids des sélecteurs (!important never more)
+  ✔ Faire l'authent fb avec template ! @done(19-03-05 17:21)
+  ✔ Grille 12 col @done(19-03-05 17:22)
+  ✔ RWD vs Mobile First @done(19-03-05 17:22)
+  ✔ Poids des sélecteurs (!important never more) @done(19-03-05 17:22)
+  ☐ Attention à l'erreur appel fonction liste
 
 
 

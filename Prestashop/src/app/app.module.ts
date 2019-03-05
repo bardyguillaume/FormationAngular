@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { UiModule } from './ui/ui.module';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -24,7 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireAuthModule, BrowserAnimationsModule, // imports firebase/auth, only needed for auth features
   ],
   providers: [],
   bootstrap: [AppComponent]
