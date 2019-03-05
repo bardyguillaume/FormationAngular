@@ -17,7 +17,6 @@ export class AuthServiceService {
         .signInWithPopup(provider)
         .then(
           res => {
-            console.log(res.user.photoURL);
             resolve(res);
           },
           err => {

@@ -8,7 +8,9 @@ import { AuthServiceService } from '../../services/auth-service.service';
 })
 export class PageLoginComponent implements OnInit {
 
+  doitAfficherBlocProfil = false;
   lienPhotoProfil = '';
+  nomUtilisateur = '' ;
   errorMessage = '';
 
   constructor(
@@ -19,13 +21,17 @@ export class PageLoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  afficherInfosUtilisateurs(utilisateur: firebase.auth.UserCredential ) {
+    this.lienPhotoProfil = utilisateur.user.photoURL;
+    this.nomUtilisateur = utilisateur.user.displayName;
+    this.doitAfficherBlocProfil = true;
+  }
 
   tryFacebookLogin() {
     this.authService.doFacebookLogin()
     .then((res: firebase.auth.UserCredential) => {
       console.log('facebook login');
-      console.log(res);
-      this.lienPhotoProfil = res.user.photoURL;
+      this.afficherInfosUtilisateurs(res);
     });
   }
 
@@ -33,6 +39,7 @@ export class PageLoginComponent implements OnInit {
     this.authService.doTwitterLogin()
     .then(res => {
       console.log('twitter login');
+      this.afficherInfosUtilisateurs(res);
     });
   }
 
@@ -40,6 +47,7 @@ export class PageLoginComponent implements OnInit {
     this.authService.doGoogleLogin()
     .then(res => {
       console.log('google login');
+      this.afficherInfosUtilisateurs(res);
     });
   }
 
