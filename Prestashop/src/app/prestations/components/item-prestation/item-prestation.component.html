@@ -1,0 +1,13 @@
+<tr>
+  <td>{{ item.typePresta }}</td>
+  <td>{{ item.client }}</td>
+  <td>{{ item.nbJours }}</td>
+  <td>{{ item.tjmHt | currency:'EUR' }}</td>
+  <td>{{ item | total: 'HT' | currency:'EUR' }}</td>
+  <td>{{ item | total: 'TTC':item.tauxTva | currency:'EUR' }}</td>
+  <td>
+    <select class="form-control">
+      <option *ngFor="let state of states | keyvalue" [selected]="state.value === item.state" [value]="state.key">{{state.value}}</option>
+    </select>
+  </td>
+</tr>
