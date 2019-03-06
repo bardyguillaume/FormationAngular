@@ -7,7 +7,7 @@
   <td>{{ item | total: 'TTC':item.tauxTva | currency:'EUR' }}</td>
   <td>
     <select class="form-control">
-      <option *ngFor="let state of states | keyvalue" [selected]="state.value === item.state" [value]="state.key">{{state.value}}</option>
+      <option *ngFor="let state of states | keyvalue" [selected]="state.value === item.state" [value]="state.value">{{state.value}}</option>
     </select>
   </td>
 </tr>
