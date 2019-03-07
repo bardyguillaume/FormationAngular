@@ -9,7 +9,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "compodoc": "compodoc -s -p src/tsconfig.app.json"
-
   },
   "private": true,
   "dependencies": {
