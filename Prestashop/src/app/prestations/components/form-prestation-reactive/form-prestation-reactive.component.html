@@ -1,0 +1,45 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <input formControlName="typePresta" type="text" class="form-control" id="type" />
+      <div class="alert alert-danger" *ngIf="form.get('typePresta').invalid && form.get('typePresta').touched">Champ
+        invalide</div>
+    </div>
+    <div class="form-group">
+      <label for="client">Client</label>
+      <input formControlName="client" type="text" class="form-control" id="client" />
+    </div>
+
+    <div class="form-group">
+      <label for="nbjour">Nbjours</label>
+      <input formControlName="nbJours" type="number" class="form-control" id="nbjours" />
+    </div>
+
+    <div class="form-group">
+      <label for="tjm">Tjm</label>
+      <input formControlName="tjmHt" type="number" class="form-control" id="tjm" />
+    </div>
+
+    <div class="form-group">
+      <label for="tva">Tva</label>
+      <input formControlName="tauxTva" type="number" class="form-control" id="tva" />
+    </div>
+
+    <div class="form-group">
+      <label for="state">State</label>
+      <select formControlName="state" class=" form-control" id="state">
+        <option *ngFor="let state of states | keyvalue" [value]="state.value"> {{ state.value }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="comment">Commentaire</label>
+      <textarea formControlName="comment" id="comment" class="form-control"> </textarea>
+    </div>
+
+    <button [disabled]="form.invalid" type="submit" class="btn btn-primary"> Submit </button>
+
+  </form>
+</div>

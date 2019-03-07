@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
+import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFirestore } from "@angular/fire/firestore";
+import * as firebase from "firebase/app";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthServiceService {
   constructor(
@@ -24,7 +24,7 @@ export class AuthServiceService {
 
   // Returns current user UID
   get currentUserId(): string {
-    return this.authenticated ? this.afAuth.auth.currentUser.uid : '';
+    return this.authenticated ? this.afAuth.auth.currentUser.uid : "";
   }
 
   private updateUserData(): void {
@@ -33,10 +33,10 @@ export class AuthServiceService {
       email: this.currentUser.email,
       photoURL: this.currentUser.photoURL
     };
-    console.log('update user data');
+    console.log("update user data");
 
     this.cloudDb
-      .collection('users')
+      .collection("users")
       .doc(this.currentUserId)
       .set(Object.assign({}, data))
       .catch(error => console.log(error));
@@ -82,8 +82,8 @@ export class AuthServiceService {
   doGoogleLogin() {
     return new Promise<any>((resolve, reject) => {
       const provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
+      provider.addScope("profile");
+      provider.addScope("email");
       this.afAuth.auth.signInWithPopup(provider).then(
         res => {
           this.updateUserData();

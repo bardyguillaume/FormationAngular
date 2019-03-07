@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { State } from 'src/app/shared/enums/state.enum';
 import { Prestation } from 'src/app/shared/models/prestation';
 
 @Injectable({
@@ -38,14 +37,24 @@ export class PrestationService {
   }
 
   // add item in collection
+  add(item: Prestation) {
+    const creationId = Date.now().toString() + item.client;
+    item.id = creationId;
+    this.cloudDb
+      .collection(this.baseCollection)
+      .doc(creationId)
+      .set(Object.assign({}, item))
+      .then(() => console.log('item ajouté'))
+      .catch(error => console.log(error));
+  }
 
   // update item in collection
-  update(item: Prestation, state: State) {
+  update(item: Prestation) {
     this.cloudDb
       .collection(this.baseCollection)
       .doc(item.id)
-      .set({ state: state }, { merge: true })
-      .then(() => (item.state = state))
+      .set(Object.assign({}, item))
+      .then(() => console.log('item updaté'))
       .catch(error => console.log(error));
   }
 

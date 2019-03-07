@@ -1,5 +1,6 @@
+<h1 class="header">Login avec mon téléphone</h1>
+
 <div [hidden]="user">
-  <h1>Login par téléphone</h1>
 
   <label for="phone">Numéro de téléphone</label><br>
 
@@ -8,7 +9,7 @@
 
   <div id="recaptcha-container"></div>
 
-  <button (click)="sendLoginCode()">SMS Text Login Code</button>
+  <button (click)="sendLoginCode()">Envoyer Code par SMS</button>
 
   <div *ngIf="windowRef.confirmationResult">
     <hr>

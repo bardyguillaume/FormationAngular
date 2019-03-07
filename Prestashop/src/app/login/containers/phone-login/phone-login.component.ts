@@ -5,7 +5,7 @@ import { PhoneNumber } from 'src/app/shared/models/phone-number';
 import { WindowService } from '../../services/window.service';
 
 @Component({
-  selector: 'phone-login',
+  selector: 'app-phone-login',
   templateUrl: './phone-login.component.html',
   styleUrls: ['./phone-login.component.scss']
 })

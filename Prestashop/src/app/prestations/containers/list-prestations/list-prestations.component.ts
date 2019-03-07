@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Link } from 'src/app/shared/interfaces/link';
 import { Prestation } from 'src/app/shared/models/prestation';
 import { PrestationService } from '../../services/prestation.service';
 
@@ -10,7 +11,7 @@ import { PrestationService } from '../../services/prestation.service';
 export class ListPrestationsComponent implements OnInit {
   prestationsList: Prestation[];
   headers: string[];
-
+  addLink: Link;
   constructor(private ps: PrestationService) {}
 
   ngOnInit() {
@@ -28,9 +29,14 @@ export class ListPrestationsComponent implements OnInit {
       'Total TTC',
       'Etat'
     ];
+
+    this.addLink = {
+      route: 'add',
+      label: 'Ajouter une Prestation'
+    };
   }
 
-  update(obj) {
-    this.ps.update(obj.presta, obj.state);
+  update(presta: Prestation) {
+    this.ps.update(presta);
   }
 }
