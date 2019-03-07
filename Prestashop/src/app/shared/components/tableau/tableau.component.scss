@@ -1,0 +1,22 @@
+@import 'theme';
+
+#tab {
+  .state-annule {
+    background: lighten($palette-color-one, 15);
+  }
+
+  .state-confirme,
+  .state-actif {
+    background: $palette-color-three;
+  }
+
+  .state-option,
+  .state-inactif {
+    background: $palette-color-one;
+  }
+
+  & tbody>* {
+    display: contents;
+  }
+
+}

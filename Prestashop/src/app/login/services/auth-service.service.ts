@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFireDatabase } from "@angular/fire/database";
-import * as firebase from "firebase/app";
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase/app';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class AuthServiceService {
   constructor(
     private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase //
+    private cloudDb: AngularFirestore //
   ) {}
 
   // Returns true if user is logged in
@@ -18,26 +18,27 @@ export class AuthServiceService {
   }
 
   // Returns current user
-  get currentUser(): any {
+  get currentUser(): firebase.User {
     return this.authenticated ? this.afAuth.auth.currentUser : null;
   }
 
   // Returns current user UID
   get currentUserId(): string {
-    return this.authenticated ? this.afAuth.auth.currentUser.uid : "";
+    return this.authenticated ? this.afAuth.auth.currentUser.uid : '';
   }
 
   private updateUserData(): void {
-    const path = `users/${this.currentUserId}`; // Endpoint on firebase
     const data = {
       name: this.currentUser.displayName,
-      email: this.currentUser.email
+      email: this.currentUser.email,
+      photoURL: this.currentUser.photoURL
     };
-    console.log("update user data");
+    console.log('update user data');
 
-    this.db
-      .object(path)
-      .update(data)
+    this.cloudDb
+      .collection('users')
+      .doc(this.currentUserId)
+      .set(Object.assign({}, data))
       .catch(error => console.log(error));
   }
 
@@ -68,7 +69,6 @@ export class AuthServiceService {
       this.afAuth.auth.signInWithPopup(provider).then(
         res => {
           this.updateUserData();
-
           resolve(res);
         },
         err => {
@@ -82,12 +82,11 @@ export class AuthServiceService {
   doGoogleLogin() {
     return new Promise<any>((resolve, reject) => {
       const provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope("profile");
-      provider.addScope("email");
+      provider.addScope('profile');
+      provider.addScope('email');
       this.afAuth.auth.signInWithPopup(provider).then(
         res => {
           this.updateUserData();
-
           resolve(res);
         },
         err => {

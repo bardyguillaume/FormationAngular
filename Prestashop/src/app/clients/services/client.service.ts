@@ -2,45 +2,45 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { State } from 'src/app/shared/enums/state.enum';
-import { Prestation } from 'src/app/shared/models/prestation';
+import { StateClient } from 'src/app/shared/enums/state-client.enum';
+import { Client } from 'src/app/shared/models/client';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrestationService {
-  private baseCollection = 'prestations';
-  prestationsCollection: Observable<Prestation[]>;
+export class ClientService {
+  private baseCollection = 'clients';
+  clientsCollection: Observable<Client[]>;
 
-  private pCollection: Prestation[] = null;
+  private pCollection: Client[] = null;
   constructor(private cloudDb: AngularFirestore) {
-    // this.collection = fakePrestations;
-    this.prestationsCollection = cloudDb
+    // this.collection = fakeclients;
+    this.clientsCollection = cloudDb
       .collection(this.baseCollection)
       .valueChanges()
       .pipe(
         map(data => {
           return data.map(obj => {
-            return new Prestation(obj);
+            return new Client(obj);
           });
         })
       );
   }
 
   // get collection
-  get collection(): Prestation[] {
+  get collection(): Client[] {
     return this.pCollection;
   }
 
   // set collection
-  set collection(col: Prestation[]) {
+  set collection(col: Client[]) {
     this.pCollection = col;
   }
 
   // add item in collection
 
   // update item in collection
-  update(item: Prestation, state: State) {
+  update(item: Client, state: StateClient) {
     this.cloudDb
       .collection(this.baseCollection)
       .doc(item.id)

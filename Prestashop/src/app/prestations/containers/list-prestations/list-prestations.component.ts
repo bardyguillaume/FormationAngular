@@ -8,13 +8,17 @@ import { PrestationService } from '../../services/prestation.service';
   styleUrls: ['./list-prestations.component.scss']
 })
 export class ListPrestationsComponent implements OnInit {
-  collection: Prestation[];
+  prestationsList: Prestation[];
   headers: string[];
 
   constructor(private ps: PrestationService) {}
 
   ngOnInit() {
-    this.collection = this.ps.collection;
+    // this.collection = this.ps.collection;
+    this.ps.prestationsCollection.subscribe((prestationsData: Prestation[]) => {
+      this.prestationsList = prestationsData;
+    });
+
     this.headers = [
       'Type',
       'Client',
@@ -24,5 +28,9 @@ export class ListPrestationsComponent implements OnInit {
       'Total TTC',
       'Etat'
     ];
+  }
+
+  update(obj) {
+    this.ps.update(obj.presta, obj.state);
   }
 }
