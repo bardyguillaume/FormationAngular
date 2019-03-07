@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthServiceService } from '../../services/auth-service.service';
-
-
 
 @Component({
   selector: 'app-login',
@@ -11,51 +7,46 @@ import { AuthServiceService } from '../../services/auth-service.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-
-  loginForm: FormGroup;
+  doitAfficherBlocProfil = false;
+  lienPhotoProfil = '';
+  nomUtilisateur = '';
   errorMessage = '';
 
-  constructor(
-    public authService: AuthServiceService,
-    private router: Router,
-    private fb: FormBuilder
-  ) {
-    this.createForm();
-  }
+  constructor(public authService: AuthServiceService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-
-  createForm() {
-    this.loginForm = this.fb.group({
-      email: ['', Validators.required ],
-      password: ['', Validators.required]
-    });
+  afficherInfosUtilisateurs(utilisateur: firebase.auth.UserCredential) {
+    this.lienPhotoProfil = utilisateur.user.photoURL;
+    this.nomUtilisateur = utilisateur.user.displayName;
+    this.doitAfficherBlocProfil = true;
   }
 
   tryFacebookLogin() {
-    this.authService.doFacebookLogin()
-    .then(res => {
-      this.router.navigate(['/user']);
-    });
+    this.authService
+      .doFacebookLogin()
+      .then((res: firebase.auth.UserCredential) => {
+        console.log('facebook login');
+        this.afficherInfosUtilisateurs(res);
+      });
   }
 
   tryTwitterLogin() {
-    this.authService.doTwitterLogin()
-    .then(res => {
-      this.router.navigate(['/user']);
-    });
+    this.authService
+      .doTwitterLogin()
+      .then((res: firebase.auth.UserCredential) => {
+        console.log('twitter login');
+
+        this.afficherInfosUtilisateurs(res);
+      });
   }
 
   tryGoogleLogin() {
-    this.authService.doGoogleLogin()
-    .then(res => {
-      this.router.navigate(['/user']);
-    });
+    this.authService
+      .doGoogleLogin()
+      .then((res: firebase.auth.UserCredential) => {
+        console.log('google login');
+        this.afficherInfosUtilisateurs(res);
+      });
   }
-
-
-
 }
