@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StateClient } from 'src/app/shared/enums/state-client.enum';
 import { Client } from 'src/app/shared/models/client';
 
 @Injectable({
@@ -10,12 +9,11 @@ import { Client } from 'src/app/shared/models/client';
 })
 export class ClientService {
   private baseCollection = 'clients';
-  clientsCollection: Observable<Client[]>;
+  private cCollection$: Observable<Client[]>;
 
-  private pCollection: Client[] = null;
   constructor(private cloudDb: AngularFirestore) {
     // this.collection = fakeclients;
-    this.clientsCollection = cloudDb
+    this.cCollection$ = cloudDb
       .collection(this.baseCollection)
       .valueChanges()
       .pipe(
@@ -28,24 +26,34 @@ export class ClientService {
   }
 
   // get collection
-  get collection(): Client[] {
-    return this.pCollection;
+  get collection$(): Observable<Client[]> {
+    return this.cCollection$;
   }
 
   // set collection
-  set collection(col: Client[]) {
-    this.pCollection = col;
+  set collection$(col: Observable<Client[]>) {
+    this.cCollection$ = col;
   }
 
   // add item in collection
+  add(item: Client) {
+    const creationId = Date.now().toString() + item.email;
+    item.id = creationId;
+    this.cloudDb
+      .collection(this.baseCollection)
+      .doc(creationId)
+      .set(Object.assign({}, item))
+      .then(() => console.log('client ajouté'))
+      .catch(error => console.log(error));
+  }
 
   // update item in collection
-  update(item: Client, state: StateClient) {
+  update(item: Client) {
     this.cloudDb
       .collection(this.baseCollection)
       .doc(item.id)
-      .set({ state: state }, { merge: true })
-      .then(() => (item.state = state))
+      .set(Object.assign({}, item))
+      .then(() => console.log('client updaté'))
       .catch(error => console.log(error));
   }
 

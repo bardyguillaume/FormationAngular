@@ -1,5 +1,6 @@
 <app-tableau [headers]="headers">
-  <app-item-prestation *ngFor="let prestation of prestationsList" [item]="prestation" (changeItem)="update($event)"></app-item-prestation>
+  <app-item-prestation *ngFor="let prestation of collection$ | async" [item]="prestation" (changeItem)="update($event)"
+    (doClick)="toggle()"></app-item-prestation>
 </app-tableau>
 
 <app-button-router [link]="addLink"></app-button-router>

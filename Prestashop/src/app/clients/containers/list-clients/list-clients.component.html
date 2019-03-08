@@ -1,3 +1,4 @@
 <app-tableau [headers]="headers">
-  <app-item-client *ngFor="let client of clientsList" [item]="client" (changeItem)="update($event)"></app-item-client>
+  <app-item-client *ngFor="let client of collection$ | async" [item]="client" (changeItem)="update($event)" (doClick)="toggle()"></app-item-client>
 </app-tableau>
+<app-button-router [link]="addLink"></app-button-router>

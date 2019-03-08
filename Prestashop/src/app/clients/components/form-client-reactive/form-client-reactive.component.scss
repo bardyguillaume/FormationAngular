@@ -1,0 +1,11 @@
+@import 'theme';
+
+form {
+  .ng-touched.ng-invalid {
+    border: 1px solid $palette-color-one;
+  }
+
+  .ng-touched.ng-valid {
+    border: 1px solid $palette-color-three;
+  }
+}

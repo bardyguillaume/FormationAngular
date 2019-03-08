@@ -9,18 +9,26 @@ import { Client } from 'src/app/shared/models/client';
 })
 export class ItemClientComponent implements OnInit {
   @Input() item: Client;
-  @Output() changeItem: EventEmitter<{
-    client: Client;
-    state: StateClient;
-  }> = new EventEmitter();
+  @Output() changeItem: EventEmitter<Client> = new EventEmitter();
 
+  @Output() doClick: EventEmitter<null> = new EventEmitter();
   states = StateClient;
+  bColor = false;
+
   constructor() {}
 
   ngOnInit() {}
 
-  changeState(event) {
-    const state = event.target.value;
-    this.changeItem.emit({ client: this.item, state: state });
+  changeState() {
+    this.changeItem.emit(this.item);
+  }
+  toggleColor() {
+    console.log('toggleColor');
+    this.doClick.emit();
+    this.bColor = !this.bColor;
+  }
+
+  unLight() {
+    this.bColor = false;
   }
 }

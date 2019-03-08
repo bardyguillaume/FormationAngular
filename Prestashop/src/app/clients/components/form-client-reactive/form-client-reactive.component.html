@@ -1,0 +1,27 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input formControlName="name" type="text" class="form-control" id="name" />
+      <div class="alert alert-danger" *ngIf="form.get('name').invalid && form.get('name').touched">Champ
+        invalide</div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input formControlName="email" type="email" class="form-control" id="email" />
+      <div class="alert alert-danger" *ngIf="form.get('email').invalid && form.get('email').touched">Email
+        invalide</div>
+    </div>
+
+    <div class="form-group">
+      <label for="state">State</label>
+      <select formControlName="state" class=" form-control" id="state">
+        <option *ngFor="let state of states | keyvalue" [value]="state.value"> {{ state.value }}</option>
+      </select>
+    </div>
+
+    <button [disabled]="form.invalid" type="submit" class="btn btn-primary"> Submit </button>
+
+  </form>
+</div>

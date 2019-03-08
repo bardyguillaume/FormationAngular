@@ -1,4 +1,4 @@
-<tr>
+<tr (click)="toggleColor()" [ngClass]="{'state-option': bColor}">
   <td>{{ item.typePresta }}</td>
   <td>{{ item.client }}</td>
   <td>{{ item.nbJours }}</td>

@@ -9,12 +9,11 @@ import { Prestation } from 'src/app/shared/models/prestation';
 })
 export class PrestationService {
   private baseCollection = 'prestations';
-  prestationsCollection: Observable<Prestation[]>;
+  private pCollection$: Observable<Prestation[]>;
 
-  private pCollection: Prestation[] = null;
   constructor(private cloudDb: AngularFirestore) {
     // this.collection = fakePrestations;
-    this.prestationsCollection = cloudDb
+    this.pCollection$ = cloudDb
       .collection(this.baseCollection)
       .valueChanges()
       .pipe(
@@ -27,13 +26,13 @@ export class PrestationService {
   }
 
   // get collection
-  get collection(): Prestation[] {
-    return this.pCollection;
+  get collection$(): Observable<Prestation[]> {
+    return this.pCollection$;
   }
 
   // set collection
-  set collection(col: Prestation[]) {
-    this.pCollection = col;
+  set collection$(col: Observable<Prestation[]>) {
+    this.pCollection$ = col;
   }
 
   // add item in collection

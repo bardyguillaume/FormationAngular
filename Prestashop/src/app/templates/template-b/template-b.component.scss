@@ -1,0 +1,22 @@
+@import 'theme';
+@import 'fonts';
+
+section {
+  background: $dark-color;
+  padding: 2rem 15px;
+  margin-bottom: 1rem;
+  text-align: center;
+
+  h1 {
+    color: $light-color;
+    font-size: $h2-fontsize;
+    margin: 0;
+    margin-bottom: .5em;
+  }
+
+  p {
+    color: $light-color;
+    font-size: $regular-fontsize;
+    margin: 0;
+  }
+}

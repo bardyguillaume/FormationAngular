@@ -5,7 +5,11 @@ import { PagePrestationsComponent } from './pages/page-prestations/page-prestati
 
 const appRoutes: Routes = [
   { path: '', component: PagePrestationsComponent },
-  { path: 'add', component: PageAddPrestationComponent }
+  {
+    path: 'add',
+    component: PageAddPrestationComponent,
+    data: { title: 'Prestations', label: 'Ajouter une prestation' }
+  }
 ];
 
 @NgModule({

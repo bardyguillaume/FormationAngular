@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Link } from 'src/app/shared/interfaces/link';
 import { Client } from 'src/app/shared/models/client';
+import { ItemClientComponent } from '../../components/item-client/item-client.component';
 import { ClientService } from '../../services/client.service';
 
 @Component({
@@ -8,21 +11,33 @@ import { ClientService } from '../../services/client.service';
   styleUrls: ['./list-clients.component.scss']
 })
 export class ListClientsComponent implements OnInit {
-  clientsList: Client[];
   headers: string[];
+  addLink: Link;
 
-  constructor(private ps: ClientService) {}
+  collection$: Observable<Client[]>;
+
+  @ViewChildren(ItemClientComponent) items: QueryList<ItemClientComponent>;
+
+  constructor(private cs: ClientService) {}
 
   ngOnInit() {
-    // this.collection = this.ps.collection;
-    this.ps.clientsCollection.subscribe((clientsData: Client[]) => {
-      this.clientsList = clientsData;
-    });
+    this.collection$ = this.cs.collection$;
 
     this.headers = ['Nom', 'Email', 'Etat'];
+
+    this.addLink = {
+      route: 'add',
+      label: 'Ajouter un client'
+    };
   }
 
-  update(obj) {
-    this.ps.update(obj.client, obj.state);
+  update(client: Client) {
+    this.cs.update(client);
+  }
+
+  toggle() {
+    this.items.forEach((item: ItemClientComponent) => {
+      item.unLight();
+    });
   }
 }
